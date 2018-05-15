@@ -1,3 +1,4 @@
+//main.js
 `let userMenu=['新开样本','埋点申请','埋点展示','权限管理']
 let permissions ={'新开样本+编辑':false,'新开样本+删除':true}; 
 
@@ -31,4 +32,12 @@ if(user){
 	router=new Router({routes})
 }else{
 	location.href='/login'
-}`
+}
+
+new Vue({
+	  el: '#app',
+	  router,
+	  template: '<App/>',
+	  components: { App }
+	})
+`
