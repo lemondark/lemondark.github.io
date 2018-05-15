@@ -1,0 +1,34 @@
+`let userMenu=['新开样本','埋点申请','埋点展示','权限管理']
+let permissions ={'新开样本+编辑':false,'新开样本+删除':true}; 
+
+//操作
+Vue.directive('has',{
+	bind:function(el,binding){
+		if(!permissions[binding.value]){
+			el.parentNode.removeChild(el);
+		}
+	}
+})
+
+//路由
+let user='123'||sessionStorage.getItem('user');
+let routes,router;
+if(user){
+	if(!userMenu.length){
+		routes=fullPath.filter(item=>{
+			return item.name!=='index'
+		})
+	}else{
+		fullPath.map(item=>{
+			if(item.name==='index'){
+				item.children=item.children.filter(sub=>{
+					return userMenu.indexOf(sub.name)>-1
+				})
+			}
+		});
+		routes=fullPath;
+	}
+	router=new Router({routes})
+}else{
+	location.href='/login'
+}`
