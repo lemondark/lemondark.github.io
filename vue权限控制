@@ -25,6 +25,7 @@ if(user){
 				item.children=item.children.filter(sub=>{
 					return userMenu.indexOf(sub.name)>-1
 				})
+				item.redirect='/index/'+item.children[0].path;	//设置子路由第一项未index默认页面
 			}
 		});
 		routes=fullPath;
