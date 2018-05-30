@@ -1,4 +1,13 @@
 项目要点纪要
+	vue-js项目搬家后，出现缺少模块的情况，很可能是缓存问题
+先删掉node_modules,然后npm cache clear(cnpm cache clear),然后再npm install
+
+	--save是对生产环境所需依赖的声明(开发应用中使用的框架，库),--save-dev是对开发环境所需依赖的声明(构建工具，测试工具)
+
+	Computed vs methods
+Computed是基于它的依赖缓存，只有相关依赖发生改变时才会重新取值，而用methods，在重新渲染的时候，函数总会重新调用执行可以说computed性能会更好
+
+
 	通过data请求图片时，要使用require来加载
  
 	
@@ -19,6 +28,15 @@
 
 	修改路由router的mode：‘history’,可以去掉url中的#前缀
 	跨域访问，可以在config的index.js中添加代理，eg:
+proxyTable:{
+	'/api':{
+		target:'https://api.douban.com/v2',
+		changeOrigin:true,
+		pathRewrite:{
+			'^/api':''
+		}
+	}
+}
  
 	利用vue-cli脚手架搭建的项目，使用的是vuejs-templates/webpack的模板。但在引用第三方组件的时候，在浏览器中报错“exports is not defined”。根据浏览器报错信息，查询到报错来源是第三方组件的一段代码
 Object.defineProperty(exports, "__esModule", {value: true});
