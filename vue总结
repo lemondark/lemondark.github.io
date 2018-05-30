@@ -1,0 +1,72 @@
+项目要点纪要
+	通过data请求图片时，要使用require来加载
+ 
+	
+	使用swiper插件时，设置swiper-slide背景图片
+ 
+
+	本地json数据获取，在最外层新建data.json文件
+在dev-server.js中新增如下代码
+ 
+数据获取：
+ 
+
+	Vue-resourse 传参{params:{name:’1’}}
+	Axios使用方法
+1,安装模块cnpm install axios –save
+2,main.js中引入improt axios from ‘axios’;
+3.在组建中使用axios，需在main.js中给vue注入原方法 Vue.prototype.$http=axios，然后可在组建中这样使用this.$http.get('/api/home')
+
+	修改路由router的mode：‘history’,可以去掉url中的#前缀
+	跨域访问，可以在config的index.js中添加代理，eg:
+ 
+	利用vue-cli脚手架搭建的项目，使用的是vuejs-templates/webpack的模板。但在引用第三方组件的时候，在浏览器中报错“exports is not defined”。根据浏览器报错信息，查询到报错来源是第三方组件的一段代码
+Object.defineProperty(exports, "__esModule", {value: true});
+这是使用了CommonJs写法，而在应用中并没有做相应的模块转换使得浏览器能够识别。而导致这个问题是因为balbel的配置文件.babelrc的问题：其中{ "modules": false }阻止了babel进行模块转换，具体见modules配置的说明，所以，将modules改为默认设置即可，或者删除该配置。
+ 
+ 
+Router设置默认值，在路由跳转后改变默认值，刷新停留在本页面：
+ 
+
+
+Vue含有文件上传的表单提交验证时，可以用el-upload的on-change事件，将文件的信息复制给表单的prop,然后再使用validateField(prop)及时验证当前的文件信息。如下：
+designDocChange:function(item){	//此处传入的item为不同表单项的prop
+var _this=this;
+	return function(file){	//返回一个on-change函数
+		_this.newApplyForm.docUpload=file.name;
+		_this.$refs.newApplyForm.validateField(item);	//验证文件上传
+	}
+},
+
+
+
+
+
+
+
+
+
+
+不错的格式化事件方法：
+function formatDate(oDate, sFormation) {
+    var date=new Date(oDate);
+    var week=['日', '一', '二', '三', '四', '五', '六'];
+    var o={
+        yyyy:date.getFullYear(),
+        yy:('0'+date.getFullYear()).slice(-2),
+        MM:('0'+(date.getMonth()+1)).slice(-2),
+        M:date.getMonth()+1,
+        dd:('0'+date.getDate()).slice(-2),
+        d:date.getDate(),
+        HH:('0'+date.getHours()).slice(-2),
+        H:date.getHours(),
+        hh:('0'+(date.getHours()>12?date.getHours()-12:date.getHours())).slice(-2),
+        h:date.getHours()>12?date.getHours()-12:date.getHours(),
+        mm:('0'+date.getMinutes()).slice(-2),
+        m:date.getMinutes(),
+        ss:('0'+date.getSeconds()).slice(-2),
+        s:date.getSeconds(),
+        w:week[date.getDay()]
+    }
+    return sFormation.replace(/[a-z]+/ig,function(item){return o[item]});
+}
