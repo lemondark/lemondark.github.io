@@ -1,0 +1,47 @@
+React踩坑记录
+1、	下载react-router 4.0+版本，没有link组件，查询发现已经独立在react-router-dom中。React-router-dom涵盖了react-dom中的组件，一般用react-router-dom即可。
+2、	外层用<Router>一直提示history的值不能为空，改成<BroswerRouter>or<HashRouter>正常显示，没有报错。若要使用<Router>,则需引入history.
+import createBrowserHistory from 'history/createBrowserHistory'
+const newHistory = createBrowserHistory();
+ReactDOM.render((<Router history={newHistory}>
+3、	<Router>目录下只能有一个子类。可用一个<div>将所有元素包装成一个子类。
+4、	4.0版本后路由的嵌套问题发生了变化。
+子路由不在包括在<Route></Route>中，直接在组件中显示
+ReactDOM.render(<BrowserRouter>
+  <div>
+    <MyMenu>
+      <Route exact  path="/" component={About} />
+      <Route path="/about" component={About} />
+      <Route path="/topics" component={Topics}/>
+    </MyMenu>
+  </div>
+</BrowserRouter>, document.getElementById('root'));
+<MyMenu>中用this.props.children来展示嵌套的路由。
+5、	每个组价页面都需要引入React,否则会报错
+6、	行内样式设置
+Style={{float:’left’}}
+7、route给子类传值，this.props.match.params.id
+
+
+
+
+
+Mock.js使用
+1、	common.js环境安装mock.js, npm install mock.js
+2、	模拟生成接口数据
+var Mock=require('mockjs');
+Mock.mock('/api/data',{
+  'list|1-10':[{
+    'id|1-100':1
+  }],
+  'star|1-5': '★'
+});
+3、	引入mock.js,然后调用该接口,实例axios调用方法
+axios.get(‘’,{}).then(res=>console.log(res.data))
+4、url可以是字符串还可以是正则表达式
+4、具体规则和语法可见：https://github.com/nuysoft/Mock/wiki 
+
+
+
+其他知识点
+1、浏览器不允许操作跨域的iframe，会有很大的安全问题。
